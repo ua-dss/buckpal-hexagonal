@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuckPal - Account Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 BuckPal</h1>
+            <p class="subtitle">Hexagonal Architecture Demo - Account Management System</p>
+        </header>
+
+        <div class="content">
+            <!-- Accounts List Section -->
+            <section class="card">
+                <h2>All Accounts</h2>
+                <button onclick="app.loadAccounts()" class="btn btn-secondary">🔄 Refresh Accounts</button>
+                <div id="accountsList" class="accounts-list">
+                    <p class="loading">Click refresh to load accounts...</p>
+                </div>
+            </section>
+
+            <!-- Create Account Section -->
+            <section class="card">
+                <h2>Create New Account</h2>
+                <form id="createAccountForm" onsubmit="app.createAccount(event)">
+                    <div class="form-group">
+                        <label for="initialBalance">Initial Balance:</label>
+                        <input type="number" id="initialBalance" name="initialBalance" min="0" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">➕ Create Account</button>
+                </form>
+            </section>
+
+            <!-- Send Money Section -->
+            <section class="card">
+                <h2>Send Money</h2>
+                <form id="sendMoneyForm" onsubmit="app.sendMoney(event)">
+                    <div class="form-group">
+                        <label for="sourceAccountId">Source Account ID:</label>
+                        <input type="number" id="sourceAccountId" name="sourceAccountId" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="targetAccountId">Target Account ID:</label>
+                        <input type="number" id="targetAccountId" name="targetAccountId" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sendAmount">Amount:</label>
+                        <input type="number" id="sendAmount" name="sendAmount" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">💸 Send Money</button>
+                </form>
+            </section>
+
+            <!-- Deposit Money Section -->
+            <section class="card">
+                <h2>Deposit Money</h2>
+                <form id="depositForm" onsubmit="app.depositMoney(event)">
+                    <div class="form-group">
+                        <label for="depositAccountId">Account ID:</label>
+                        <input type="number" id="depositAccountId" name="depositAccountId" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="depositAmount">Amount:</label>
+                        <input type="number" id="depositAmount" name="depositAmount" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">💰 Deposit</button>
+                </form>
+            </section>
+
+            <!-- Withdraw Money Section -->
+            <section class="card">
+                <h2>Withdraw Money</h2>
+                <form id="withdrawForm" onsubmit="app.withdrawMoney(event)">
+                    <div class="form-group">
+                        <label for="withdrawAccountId">Account ID:</label>
+                        <input type="number" id="withdrawAccountId" name="withdrawAccountId" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="withdrawAmount">Amount:</label>
+                        <input type="number" id="withdrawAmount" name="withdrawAmount" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">🏧 Withdraw</button>
+                </form>
+            </section>
+
+            <!-- Get Balance Section -->
+            <section class="card">
+                <h2>Check Balance</h2>
+                <form id="balanceForm" onsubmit="app.getBalance(event)">
+                    <div class="form-group">
+                        <label for="balanceAccountId">Account ID:</label>
+                        <input type="number" id="balanceAccountId" name="balanceAccountId" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">🔍 Check Balance</button>
+                </form>
+                <div id="balanceResult" class="result-box"></div>
+            </section>
+        </div>
+
+        <!-- Message Display -->
+        <div id="messageBox" class="message-box"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

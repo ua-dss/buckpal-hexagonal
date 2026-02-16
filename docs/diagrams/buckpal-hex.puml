@@ -1,0 +1,92 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+class ActivityJpaEntity
+class AccountMapper
+interface SpringDataAccountRepository
+interface ActivityRepository
+class AccountPersistenceAdapter
+class AccountJpaEntity
+class AccountBalanceController
+class AccountSendMoneyController
+class AccountWithdrawController
+class AccountCreateController
+class AccountDepositController
+class AccountListAllController
+interface UpdateAccountStatePort
+interface LoadAccountPort
+interface AccountListAllUseCase
+interface AccountWithdrawUseCase
+interface AccountBalanceUseCase
+interface AccountDepositUseCase
+interface AccountSendMoneyUseCase
+interface AccountCreateUseCase
+class Activity
+class ActivityId
+class Account
+class AccountId
+class Money
+class ActivityWindow
+class AccountBalanceService
+class AccountDepositService
+class AccountListAllService
+class AccountWithdrawService
+class AccountCreateService
+class AccountSendMoneyService
+
+AccountMapper ..> AccountJpaEntity
+AccountMapper ..> Account
+AccountMapper ..> ActivityWindow
+AccountMapper ..> Activity
+AccountMapper ..> ActivityJpaEntity
+AccountPersistenceAdapter ..|> LoadAccountPort
+AccountPersistenceAdapter ..|> UpdateAccountStatePort
+AccountPersistenceAdapter *-- SpringDataAccountRepository
+AccountPersistenceAdapter *-- ActivityRepository
+AccountPersistenceAdapter *-- AccountMapper
+AccountPersistenceAdapter ..> AccountId
+AccountPersistenceAdapter ..> Account
+AccountBalanceController *-- AccountBalanceUseCase
+AccountSendMoneyController *-- AccountSendMoneyUseCase
+AccountSendMoneyController *-- AccountBalanceUseCase
+AccountWithdrawController *-- AccountWithdrawUseCase
+AccountWithdrawController *-- AccountBalanceUseCase
+AccountCreateController *-- AccountCreateUseCase
+AccountDepositController *-- AccountDepositUseCase
+AccountDepositController *-- AccountBalanceUseCase
+AccountListAllController *-- AccountListAllUseCase
+UpdateAccountStatePort ..> AccountId
+LoadAccountPort ..> AccountId
+LoadAccountPort ..> Account
+AccountBalanceUseCase ..> Money
+AccountCreateUseCase ..> AccountId
+Activity *-- ActivityId
+Activity *-- AccountId
+Activity *-- Money
+Account *-- AccountId
+Account *-- Money
+Account *-- ActivityWindow
+Account ..> Account
+Money --> Money
+ActivityWindow o-- Activity
+ActivityWindow ..> AccountId
+ActivityWindow ..> Money
+AccountBalanceService ..|> AccountBalanceUseCase
+AccountBalanceService *-- LoadAccountPort
+AccountBalanceService ..> Money
+AccountDepositService ..|> AccountDepositUseCase
+AccountDepositService *-- LoadAccountPort
+AccountDepositService *-- UpdateAccountStatePort
+AccountListAllService ..|> AccountListAllUseCase
+AccountListAllService *-- LoadAccountPort
+AccountWithdrawService ..|> AccountWithdrawUseCase
+AccountWithdrawService *-- LoadAccountPort
+AccountWithdrawService *-- UpdateAccountStatePort
+AccountCreateService ..|> AccountCreateUseCase
+AccountCreateService *-- UpdateAccountStatePort
+AccountCreateService ..> AccountId
+AccountSendMoneyService ..|> AccountSendMoneyUseCase
+AccountSendMoneyService *-- LoadAccountPort
+AccountSendMoneyService *-- UpdateAccountStatePort
+@enduml

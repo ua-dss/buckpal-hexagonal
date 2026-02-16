@@ -1,0 +1,7 @@
+io.reflectoring.buckpal
+io.reflectoring.buckpal.application.domain.model
+io.reflectoring.buckpal.application.domain.service
+io.reflectoring.buckpal.application.port.in
+io.reflectoring.buckpal.application.port.out
+io.reflectoring.buckpal.common
+io.reflectoring.buckpal.common.validation
