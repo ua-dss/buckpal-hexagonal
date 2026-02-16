@@ -1,0 +1,50 @@
+{
+	"name": "Java Development",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".",
+		"args": {}
+	},
+
+	// Set *default* container specific settings.json values on container create.
+	//"settings": { 
+	//},
+	// Add the IDs of extensions you want installed when the container is created.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"vscjava.vscode-java-pack",
+				"vscjava.vscode-spring-boot-dashboard",
+				"vscjava.vscode-lombok",
+				"vscjava.vscode-gradle",
+				"vmware.vscode-spring-boot",
+				"vmware.vscode-boot-dev-pack"
+			],
+			// Container-specific VS Code settings (applied inside the container)
+			"settings": {
+				"terminal.integrated.profiles.linux": {
+					"bash": {
+						"path": "/bin/bash"
+					}
+				},
+				"terminal.integrated.defaultProfile.linux": "bash"
+			}
+		}
+	},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		8080
+	],
+
+	// Set container environment variables
+	"containerEnv": {
+		"SHELL": "/bin/bash"
+	},
+	// Use 'postCreateCommand' to run commands after the container is created.
+	//"postCreateCommand": "echo 'Devcontainer ready — default shell: bash, prompt hostname: pydev'",
+
+	"runArgs": ["--hostname", "javadev"],
+	
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "coder"
+}
