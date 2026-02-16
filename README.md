@@ -1,6 +1,5 @@
 # Hexagonal Architecture Demo
-
-This repository implements a small web app in the Hexagonal Architecture style, as discussed in the book "Get Your Hands Dirty on Clean Architecture". Its update the book author's implementation in [Buckpal](https://github.com/thombergs/buckpal)
+This repository implements a small web application following the Hexagonal Architecture style discussed in the book "Get Your Hands Dirty on Clean Architecture". It updates the author’s original implementation in [Buckpal](https://github.com/thombergs/buckpal).
 
 ## Technology Stack
 
@@ -46,7 +45,8 @@ This repository implements a small web app in the Hexagonal Architecture style, 
    ```bash
    ./gradlew bootRun
    ```
-   The application will start on `http://localhost:8080`
+   The application will start on `http://localhost:8080`.
+   The H2 console is available at `http://localhost:8080/h2-console`.
 
 6. **Generate Javadoc**
    ```bash
