@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="io.reflectoring.buckpal.DependencyRuleTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-02-16T05:52:18" hostname="javadev" time="2.412">
-  <properties/>
-  <testcase name="domainModelDoesNotDependOnOutside()" classname="io.reflectoring.buckpal.DependencyRuleTests" time="1.203"/>
-  <testcase name="validateRegistrationContextArchitecture()" classname="io.reflectoring.buckpal.DependencyRuleTests" time="1.208"/>
-  <system-out><![CDATA[2026-02-16T05:52:18.577Z  INFO 57343 --- [    Test worker] com.tngtech.archunit.core.PluginLoader   : Detected Java version 17.0.18
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

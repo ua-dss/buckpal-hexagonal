@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="io.reflectoring.buckpal.application.domain.ActivityWindowTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-02-16T05:52:23" hostname="javadev" time="0.003">
-  <properties/>
-  <testcase name="calculatesBalance()" classname="io.reflectoring.buckpal.application.domain.ActivityWindowTest" time="0.0"/>
-  <testcase name="calculatesStartTimestamp()" classname="io.reflectoring.buckpal.application.domain.ActivityWindowTest" time="0.003"/>
-  <testcase name="calculatesEndTimestamp()" classname="io.reflectoring.buckpal.application.domain.ActivityWindowTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

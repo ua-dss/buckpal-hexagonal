@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="io.reflectoring.buckpal.application.port.in.AccountSendMoneyCommandTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-02-16T05:52:23" hostname="javadev" time="0.058">
-  <properties/>
-  <testcase name="accountIdValidationFails()" classname="io.reflectoring.buckpal.application.port.in.AccountSendMoneyCommandTest" time="0.026"/>
-  <testcase name="validationOk()" classname="io.reflectoring.buckpal.application.port.in.AccountSendMoneyCommandTest" time="0.0"/>
-  <testcase name="moneyValidationFails()" classname="io.reflectoring.buckpal.application.port.in.AccountSendMoneyCommandTest" time="0.031"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
