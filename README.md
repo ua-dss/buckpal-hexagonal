@@ -45,8 +45,9 @@ This repository implements a small web application following the Hexagonal Archi
    ```bash
    ./gradlew bootRun
    ```
-   The application will start on `http://localhost:8080`.
-   The H2 console is available at `http://localhost:8080/h2-console`.
+	The application starts on `http://localhost:8080`.
+
+	The H2 console is available at `http://localhost:8080/h2-console`. Set `JDBC_URL = jdbc:h2:mem:db` and `Driver class = org.h2.Driver`
 
 6. **Generate Javadoc**
    ```bash
