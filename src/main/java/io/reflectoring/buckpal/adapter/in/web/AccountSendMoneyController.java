@@ -34,12 +34,12 @@ class AccountSendMoneyController {
 
 			boolean success = sendMoneyUseCase.sendMoney(command);
 
-			AccountBalanceUseCase.GetAccountBalanceQuery sourceQuery =
-					new AccountBalanceUseCase.GetAccountBalanceQuery(
+			AccountBalanceUseCase.AccountBalanceQuery sourceQuery =
+					new AccountBalanceUseCase.AccountBalanceQuery(
 							new AccountId(sourceAccountId));
 
-			AccountBalanceUseCase.GetAccountBalanceQuery targetQuery =
-					new AccountBalanceUseCase.GetAccountBalanceQuery(
+			AccountBalanceUseCase.AccountBalanceQuery targetQuery =
+					new AccountBalanceUseCase.AccountBalanceQuery(
 							new AccountId(targetAccountId));
 
 			Long sourceBalance = accountBalanceUseCase.getAccountBalance(sourceQuery)

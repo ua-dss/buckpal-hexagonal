@@ -8,7 +8,8 @@ import static io.reflectoring.buckpal.common.validation.Validation.validate;
 
 public record AccountWithdrawCommand(
 		@NotNull AccountId accountId,
-		@NotNull Money money
+		@NotNull @PositiveMoney Money money
+
 ) {
 
 	public AccountWithdrawCommand(AccountId accountId, Money money) {

@@ -32,8 +32,8 @@ class AccountDepositController {
 
 			boolean success = accountDepositUseCase.deposit(command);
 
-			AccountBalanceUseCase.GetAccountBalanceQuery query =
-					new AccountBalanceUseCase.GetAccountBalanceQuery(
+			AccountBalanceUseCase.AccountBalanceQuery query =
+					new AccountBalanceUseCase.AccountBalanceQuery(
 							new AccountId(accountId));
 
 			Long balance = accountBalanceUseCase.getAccountBalance(query)

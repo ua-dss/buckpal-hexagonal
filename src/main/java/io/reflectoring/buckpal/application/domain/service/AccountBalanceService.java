@@ -13,7 +13,7 @@ public class AccountBalanceService implements AccountBalanceUseCase {
 	private final LoadAccountPort loadAccountPort;
 
 	@Override
-	public Money getAccountBalance(GetAccountBalanceQuery query) {
+	public Money getAccountBalance(AccountBalanceQuery query) {
 		return loadAccountPort.loadAccount(query.accountId())
 				.calculateBalance();
 	}

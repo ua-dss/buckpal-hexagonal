@@ -2,39 +2,265 @@
 skinparam classAttributeIconSize 0
 hide circle
 
-class ActivityJpaEntity
-class AccountMapper
-interface SpringDataAccountRepository
-interface ActivityRepository
-class AccountPersistenceAdapter
-class AccountJpaEntity
-class AccountBalanceController
-class AccountSendMoneyController
-class AccountWithdrawController
-class AccountCreateController
-class AccountDepositController
-class AccountListAllController
-interface UpdateAccountStatePort
-interface LoadAccountPort
-interface AccountListAllUseCase
-interface AccountWithdrawUseCase
-interface AccountBalanceUseCase
-interface AccountDepositUseCase
-interface AccountSendMoneyUseCase
-interface AccountCreateUseCase
-class Activity
-class ActivityId
-class Account
-class AccountId
-class Money
-class ActivityWindow
-class AccountBalanceService
-class AccountDepositService
-class AccountListAllService
-class AccountWithdrawService
-class AccountCreateService
-class AccountSendMoneyService
+class BuckPalConfigurationProperties {
+  -transferThreshold: long = Long.MAX_VALUE
+}
 
+class BuckPalApplication {
+  +{static} main(args: String[]): void
+}
+
+class BuckPalConfiguration {
+  +moneyTransferProperties(buckPalConfigurationProperties: BuckPalConfigurationProperties): MoneyTransferProperties
+}
+
+class ActivityJpaEntity {
+  -id: Long
+  -timestamp: LocalDateTime
+  -ownerAccountId: long
+  -sourceAccountId: long
+  -targetAccountId: long
+  -amount: long
+}
+
+class AccountMapper {
+  ~mapToDomainEntity(account: AccountJpaEntity, activities: List<ActivityJpaEntity>): Account
+  ~mapToActivityWindow(activities: List<ActivityJpaEntity>): ActivityWindow
+  ~mapToJpaEntity(activity: Activity): ActivityJpaEntity
+}
+
+interface SpringDataAccountRepository {
+}
+
+interface ActivityRepository {
+  ~findByOwner(ownerAccountId: long): List<ActivityJpaEntity>
+  ~getDepositBalanceUntil(accountId: long, until: LocalDateTime): Optional<Long>
+  ~getWithdrawalBalanceUntil(accountId: long, until: LocalDateTime): Optional<Long>
+}
+
+class AccountPersistenceAdapter {
+  -accountRepository: SpringDataAccountRepository
+  -activityRepository: ActivityRepository
+  -accountMapper: AccountMapper
+  --
+  +loadAccount(accountId: AccountId): Account
+  +getAllAccounts(): List<Account>
+  +updateActivities(account: Account): void
+  +createAccount(account: Account): AccountId
+}
+
+class NoOpAccountLock {
+  +lockAccount(accountId: AccountId): void
+  +releaseAccount(accountId: AccountId): void
+}
+
+class AccountJpaEntity {
+  -id: Long
+  -baselineBalance: Long
+}
+
+class AccountBalanceController {
+  -getAccountBalanceUseCase: AccountBalanceUseCase
+  --
+  ~getAccountBalance(accountId: Long): BalanceResponse
+}
+
+class AccountSendMoneyController {
+  -sendMoneyUseCase: AccountSendMoneyUseCase
+  -accountBalanceUseCase: AccountBalanceUseCase
+  --
+  ~sendMoney(sourceAccountId: Long, targetAccountId: Long, amount: Long): SendMoneyResponse
+}
+
+class AccountWithdrawController {
+  -accountWithdrawUseCase: AccountWithdrawUseCase
+  -accountBalanceUseCase: AccountBalanceUseCase
+  --
+  ~withdraw(accountId: Long, amount: Long): WithdrawResponse
+}
+
+class AccountCreateController {
+  -createAccountUseCase: AccountCreateUseCase
+  --
+  ~createAccount(initialBalance: Long): CreateResponse
+}
+
+class AccountDepositController {
+  -accountDepositUseCase: AccountDepositUseCase
+  -accountBalanceUseCase: AccountBalanceUseCase
+  --
+  ~deposit(accountId: Long, amount: Long): DepositResponse
+}
+
+class AccountListAllController {
+  -listAccountsUseCase: AccountListAllUseCase
+  --
+  ~listAccounts(): ListResponse
+}
+
+class Validation {
+  -{static} validator: Validator = buildDefaultValidatorFactory().getValidator()
+  --
+  +{static} validate(subject: T): void
+}
+
+interface UpdateAccountStatePort {
+  ~updateActivities(account: Account): void
+  ~createAccount(account: Account): AccountId
+}
+
+interface AccountLock {
+  ~lockAccount(accountId: Account.AccountId): void
+  ~releaseAccount(accountId: Account.AccountId): void
+}
+
+interface LoadAccountPort {
+  ~loadAccount(accountId: AccountId): Account
+  ~getAllAccounts(): List<Account>
+}
+
+class PositiveMoneyValidator {
+  +isValid(value: Money, context: ConstraintValidatorContext): boolean
+}
+
+interface AccountListAllUseCase {
+  ~listAccounts(): List<Account>
+}
+
+interface AccountWithdrawUseCase {
+  ~withdraw(command: AccountWithdrawCommand): boolean
+}
+
+interface AccountBalanceUseCase {
+  ~getAccountBalance(query: AccountBalanceQuery): Money
+}
+
+interface AccountDepositUseCase {
+  ~deposit(command: AccountDepositCommand): boolean
+}
+
+interface AccountSendMoneyUseCase {
+  ~sendMoney(command: AccountSendMoneyCommand): boolean
+}
+
+interface AccountCreateUseCase {
+  ~createAccount(command: AccountCreateCommand): AccountId
+}
+
+class Activity {
+  -id: ActivityId
+  -ownerAccountId: Account.AccountId
+  -sourceAccountId: Account.AccountId
+  -targetAccountId: Account.AccountId
+  -timestamp: LocalDateTime
+  -money: Money
+  --
+  +Activity(ownerAccountId: Account.AccountId, sourceAccountId: Account.AccountId, targetAccountId: Account.AccountId, timestamp: LocalDateTime, money: Money)
+}
+
+class ActivityId {
+  -value: Long
+}
+
+class Account {
+  -id: AccountId
+  -baselineBalance: Money
+  -activityWindow: ActivityWindow
+  --
+  +{static} withoutId(baselineBalance: Money, activityWindow: ActivityWindow): Account
+  +{static} withId(accountId: AccountId, baselineBalance: Money, activityWindow: ActivityWindow): Account
+  +getId(): Optional<AccountId>
+  +calculateBalance(): Money
+  +withdraw(money: Money, targetAccountId: AccountId): boolean
+  -mayWithdraw(money: Money): boolean
+  +deposit(money: Money, sourceAccountId: AccountId): boolean
+}
+
+class AccountId {
+  -value: Long
+}
+
+class Money {
+  +{static} ZERO: Money = Money.of(0L)
+  -amount: BigInteger
+  --
+  +isPositiveOrZero(): boolean
+  +isNegative(): boolean
+  +isPositive(): boolean
+  +isGreaterThanOrEqualTo(money: Money): boolean
+  +isGreaterThan(money: Money): boolean
+  +{static} of(value: long): Money
+  +{static} add(a: Money, b: Money): Money
+  +minus(money: Money): Money
+  +plus(money: Money): Money
+  +{static} subtract(a: Money, b: Money): Money
+  +negate(): Money
+}
+
+class ActivityWindow {
+  -activities: List<Activity>
+  --
+  +ActivityWindow(activities: List<Activity>)
+  +ActivityWindow(activities: Activity)
+  +getStartTimestamp(): LocalDateTime
+  +getEndTimestamp(): LocalDateTime
+  +calculateBalance(accountId: Account.AccountId): Money
+  +getActivities(): List<Activity>
+  +addActivity(activity: Activity): void
+}
+
+class ThresholdExceededException {
+  +ThresholdExceededException(threshold: Money, actual: Money)
+}
+
+class AccountBalanceService {
+  -loadAccountPort: LoadAccountPort
+  --
+  +getAccountBalance(query: AccountBalanceQuery): Money
+}
+
+class AccountDepositService {
+  -loadAccountPort: LoadAccountPort
+  -updateAccountStatePort: UpdateAccountStatePort
+  --
+  +deposit(command: AccountDepositCommand): boolean
+}
+
+class AccountListAllService {
+  -loadAccountPort: LoadAccountPort
+  --
+  +listAccounts(): List<Account>
+}
+
+class AccountWithdrawService {
+  -loadAccountPort: LoadAccountPort
+  -updateAccountStatePort: UpdateAccountStatePort
+  --
+  +withdraw(command: AccountWithdrawCommand): boolean
+}
+
+class MoneyTransferProperties {
+  -maximumTransferThreshold: Money = Money.of(1_000_000L)
+}
+
+class AccountCreateService {
+  -updateAccountStatePort: UpdateAccountStatePort
+  --
+  +createAccount(command: AccountCreateCommand): AccountId
+}
+
+class AccountSendMoneyService {
+  -loadAccountPort: LoadAccountPort
+  -accountLock: AccountLock
+  -updateAccountStatePort: UpdateAccountStatePort
+  -moneyTransferProperties: MoneyTransferProperties
+  --
+  +sendMoney(command: AccountSendMoneyCommand): boolean
+  -checkThreshold(command: AccountSendMoneyCommand): void
+}
+
+BuckPalConfiguration ..> BuckPalConfigurationProperties
+BuckPalConfiguration ..> MoneyTransferProperties
 AccountMapper ..> AccountJpaEntity
 AccountMapper ..> Account
 AccountMapper ..> ActivityWindow
@@ -47,6 +273,8 @@ AccountPersistenceAdapter *-- ActivityRepository
 AccountPersistenceAdapter *-- AccountMapper
 AccountPersistenceAdapter ..> AccountId
 AccountPersistenceAdapter ..> Account
+NoOpAccountLock ..|> AccountLock
+NoOpAccountLock ..> AccountId
 AccountBalanceController *-- AccountBalanceUseCase
 AccountSendMoneyController *-- AccountSendMoneyUseCase
 AccountSendMoneyController *-- AccountBalanceUseCase
@@ -56,9 +284,12 @@ AccountCreateController *-- AccountCreateUseCase
 AccountDepositController *-- AccountDepositUseCase
 AccountDepositController *-- AccountBalanceUseCase
 AccountListAllController *-- AccountListAllUseCase
+UpdateAccountStatePort ..> Account
 UpdateAccountStatePort ..> AccountId
+AccountLock ..> AccountId
 LoadAccountPort ..> AccountId
 LoadAccountPort ..> Account
+PositiveMoneyValidator ..> Money
 AccountBalanceUseCase ..> Money
 AccountCreateUseCase ..> AccountId
 Activity *-- ActivityId
@@ -72,6 +303,7 @@ Money --> Money
 ActivityWindow o-- Activity
 ActivityWindow ..> AccountId
 ActivityWindow ..> Money
+ThresholdExceededException ..> Money
 AccountBalanceService ..|> AccountBalanceUseCase
 AccountBalanceService *-- LoadAccountPort
 AccountBalanceService ..> Money
@@ -83,10 +315,13 @@ AccountListAllService *-- LoadAccountPort
 AccountWithdrawService ..|> AccountWithdrawUseCase
 AccountWithdrawService *-- LoadAccountPort
 AccountWithdrawService *-- UpdateAccountStatePort
+MoneyTransferProperties *-- Money
 AccountCreateService ..|> AccountCreateUseCase
 AccountCreateService *-- UpdateAccountStatePort
 AccountCreateService ..> AccountId
 AccountSendMoneyService ..|> AccountSendMoneyUseCase
 AccountSendMoneyService *-- LoadAccountPort
+AccountSendMoneyService *-- AccountLock
 AccountSendMoneyService *-- UpdateAccountStatePort
+AccountSendMoneyService *-- MoneyTransferProperties
 @enduml

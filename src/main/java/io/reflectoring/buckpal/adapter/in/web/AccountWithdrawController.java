@@ -32,8 +32,8 @@ class AccountWithdrawController {
 
 			boolean success = accountWithdrawUseCase.withdraw(command);
 
-			AccountBalanceUseCase.GetAccountBalanceQuery query =
-					new AccountBalanceUseCase.GetAccountBalanceQuery(
+			AccountBalanceUseCase.AccountBalanceQuery query =
+					new AccountBalanceUseCase.AccountBalanceQuery(
 							new AccountId(accountId));
 
 			Long balance = accountBalanceUseCase.getAccountBalance(query)

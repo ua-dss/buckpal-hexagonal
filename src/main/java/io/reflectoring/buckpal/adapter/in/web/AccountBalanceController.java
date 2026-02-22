@@ -20,8 +20,8 @@ class AccountBalanceController {
 	BalanceResponse getAccountBalance(@RequestParam("accountId") Long accountId) {
 
 		try {
-			AccountBalanceUseCase.GetAccountBalanceQuery query =
-					new AccountBalanceUseCase.GetAccountBalanceQuery(
+			AccountBalanceUseCase.AccountBalanceQuery query =
+					new AccountBalanceUseCase.AccountBalanceQuery(
 							new AccountId(accountId));
 
 			Long balance = getAccountBalanceUseCase.getAccountBalance(query)

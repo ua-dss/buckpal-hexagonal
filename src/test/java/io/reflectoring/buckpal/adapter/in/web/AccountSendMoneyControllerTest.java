@@ -29,7 +29,7 @@ class AccountSendMoneyControllerTest {
 	@Test
 	void testSendMoney() throws Exception {
 
-		given(accountBalanceUseCase.getAccountBalance(any(AccountBalanceUseCase.GetAccountBalanceQuery.class)))
+		given(accountBalanceUseCase.getAccountBalance(any(AccountBalanceUseCase.AccountBalanceQuery.class)))
 				.willReturn(Money.of(1000L));
 
 		mockMvc.perform(post("/accounts/send")
