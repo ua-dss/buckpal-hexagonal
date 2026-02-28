@@ -31,9 +31,8 @@ class AccountDepositController {
 
 			boolean success = depositPort.deposit(command);
 
-			ForBalanceAccount.BalanceQuery query =
-					new ForBalanceAccount.BalanceQuery(
-							new AccountId(accountId));
+			ForBalanceAccount.BalanceQuery query = new ForBalanceAccount.BalanceQuery(
+					new AccountId(accountId));
 
 			Long balance = balancePort.getBalance(query)
 					.getAmount()

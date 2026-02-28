@@ -26,14 +26,12 @@ class AccountPersistenceAdapter implements
 	@Override
 	public Account loadAccount(AccountId accountId) {
 
-		AccountJpaEntity account =
-				accountRepository.findById(accountId.getValue())
-						.orElseThrow(() -> new EntityNotFoundException(
-								"Account with ID " + accountId.getValue() + " not found"));
+		AccountJpaEntity account = accountRepository.findById(accountId.getValue())
+				.orElseThrow(() -> new EntityNotFoundException(
+						"Account with ID " + accountId.getValue() + " not found"));
 
-		List<ActivityJpaEntity> activities =
-				activityRepository.findByOwner(
-						accountId.getValue());
+		List<ActivityJpaEntity> activities = activityRepository.findByOwner(
+				accountId.getValue());
 
 		return accountMapper.mapToDomainEntity(
 				account,
@@ -45,9 +43,8 @@ class AccountPersistenceAdapter implements
 	public List<Account> getAllAccounts() {
 		return accountRepository.findAll().stream()
 				.map(accountJpaEntity -> {
-					List<ActivityJpaEntity> activities =
-							activityRepository.findByOwner(
-									accountJpaEntity.getId());
+					List<ActivityJpaEntity> activities = activityRepository.findByOwner(
+							accountJpaEntity.getId());
 
 					return accountMapper.mapToDomainEntity(
 							accountJpaEntity,

@@ -31,6 +31,7 @@ public class ActivityWindow {
 
 	/**
 	 * The timestamp of the last activity within this window.
+	 * 
 	 * @return
 	 */
 	public LocalDateTime getEndTimestamp() {
@@ -41,7 +42,8 @@ public class ActivityWindow {
 	}
 
 	/**
-	 * Calculates the balance by summing up the values of all activities within this window.
+	 * Calculates the balance by summing up the values of all activities within this
+	 * window.
 	 */
 	public Money calculateBalance(Account.AccountId accountId) {
 		Money depositBalance = activities.stream()

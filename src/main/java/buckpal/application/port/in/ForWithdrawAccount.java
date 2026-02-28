@@ -12,18 +12,17 @@ public interface ForWithdrawAccount {
 	boolean withdraw(WithdrawCommand command);
 
 	public record WithdrawCommand(
-		@NotNull AccountId accountId,
-		@NotNull @IPositiveMoney Money money
+			@NotNull AccountId accountId,
+			@NotNull @IPositiveMoney Money money
 
-) {
+	) {
 
-	public WithdrawCommand(AccountId accountId, Money money) {
-		this.accountId = accountId;
-		this.money = money;
-		validate(this);
+		public WithdrawCommand(AccountId accountId, Money money) {
+			this.accountId = accountId;
+			this.money = money;
+			validate(this);
+		}
+
 	}
-
-}
-
 
 }

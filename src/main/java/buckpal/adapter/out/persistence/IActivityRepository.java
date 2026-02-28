@@ -11,7 +11,7 @@ import java.util.Optional;
 interface IActivityRepository extends JpaRepository<ActivityJpaEntity, Long> {
 
 	@Query("""
-			select a from ActivityJpaEntity a 
+			select a from ActivityJpaEntity a
 			where a.ownerAccountId = :ownerAccountId
 			""")
 	List<ActivityJpaEntity> findByOwner(

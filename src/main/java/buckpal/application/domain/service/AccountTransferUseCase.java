@@ -60,13 +60,10 @@ public class AccountTransferUseCase implements ForSendMoneyAccount {
 	}
 
 	private void checkThreshold(SendMoneyCommand command) {
-		if(command.money().isGreaterThan(moneyTransferProperties.getMaximumTransferThreshold())){
-			throw new ThresholdExceededException(moneyTransferProperties.getMaximumTransferThreshold(), command.money());
+		if (command.money().isGreaterThan(moneyTransferProperties.getMaximumTransferThreshold())) {
+			throw new ThresholdExceededException(moneyTransferProperties.getMaximumTransferThreshold(),
+					command.money());
 		}
 	}
 
 }
-
-
-
-

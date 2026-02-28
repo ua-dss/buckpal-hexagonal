@@ -33,13 +33,11 @@ class AccountSendMoneyController {
 
 			boolean success = sendPort.sendMoney(command);
 
-			ForBalanceAccount.BalanceQuery sourceQuery =
-					new ForBalanceAccount.BalanceQuery(
-							new AccountId(sourceAccountId));
+			ForBalanceAccount.BalanceQuery sourceQuery = new ForBalanceAccount.BalanceQuery(
+					new AccountId(sourceAccountId));
 
-			ForBalanceAccount.BalanceQuery targetQuery =
-					new ForBalanceAccount.BalanceQuery(
-							new AccountId(targetAccountId));
+			ForBalanceAccount.BalanceQuery targetQuery = new ForBalanceAccount.BalanceQuery(
+					new AccountId(targetAccountId));
 
 			Long sourceBalance = balancePort.getBalance(sourceQuery)
 					.getAmount()

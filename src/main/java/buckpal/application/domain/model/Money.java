@@ -13,23 +13,23 @@ public class Money {
 	@NonNull
 	private final BigInteger amount;
 
-	public boolean isPositiveOrZero(){
+	public boolean isPositiveOrZero() {
 		return this.amount.compareTo(BigInteger.ZERO) >= 0;
 	}
 
-	public boolean isNegative(){
+	public boolean isNegative() {
 		return this.amount.compareTo(BigInteger.ZERO) < 0;
 	}
 
-	public boolean isPositive(){
+	public boolean isPositive() {
 		return this.amount.compareTo(BigInteger.ZERO) > 0;
 	}
 
-	public boolean isGreaterThanOrEqualTo(Money money){
+	public boolean isGreaterThanOrEqualTo(Money money) {
 		return this.amount.compareTo(money.amount) >= 0;
 	}
 
-	public boolean isGreaterThan(Money money){
+	public boolean isGreaterThan(Money money) {
 		return this.amount.compareTo(money.amount) >= 1;
 	}
 
@@ -41,11 +41,11 @@ public class Money {
 		return new Money(a.amount.add(b.amount));
 	}
 
-	public Money minus(Money money){
+	public Money minus(Money money) {
 		return new Money(this.amount.subtract(money.amount));
 	}
 
-	public Money plus(Money money){
+	public Money plus(Money money) {
 		return new Money(this.amount.add(money.amount));
 	}
 
@@ -53,7 +53,7 @@ public class Money {
 		return new Money(a.amount.subtract(b.amount));
 	}
 
-	public Money negate(){
+	public Money negate() {
 		return new Money(this.amount.negate());
 	}
 
