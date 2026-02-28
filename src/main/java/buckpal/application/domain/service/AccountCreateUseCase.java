@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class AccountCreateUseCase implements ForCreateAccount {
 
-	private final ForUpdateAccount updateAccountStatePort;
+	private final ForUpdateAccount updatePort;
 
 	@Override
 	public AccountId createAccount(CreateCommand command) {
@@ -23,7 +23,7 @@ public class AccountCreateUseCase implements ForCreateAccount {
 				command.initialBalance(),
 				new ActivityWindow());
 
-		return updateAccountStatePort.createAccount(newAccount);
+		return updatePort.createAccount(newAccount);
 	}
 
 }

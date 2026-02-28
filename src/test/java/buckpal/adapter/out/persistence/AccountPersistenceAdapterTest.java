@@ -14,7 +14,7 @@ import static buckpal.common.ActivityTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import({AccountPersistenceAdapter.class, AccountMapper.class})
+@Import({ AccountPersistenceAdapter.class, AccountMapper.class })
 class AccountPersistenceAdapterTest {
 
 	@Autowired

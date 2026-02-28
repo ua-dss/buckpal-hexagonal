@@ -12,16 +12,16 @@ import lombok.RequiredArgsConstructor;
 @IUseCase
 public class AccountWithdrawUseCase implements ForWithdrawAccount {
 
-	private final ForGetAccount loadAccountPort;
-	private final ForUpdateAccount updateAccountStatePort;
+	private final ForGetAccount loadPort;
+	private final ForUpdateAccount updatePort;
 
 	@Override
 	public boolean withdraw(WithdrawCommand command) {
-		Account account = loadAccountPort.loadAccount(command.accountId());
+		Account account = loadPort.loadAccount(command.accountId());
 		// Use a system account as the target for external withdrawals
 		AccountId externalTargetAccount = new AccountId(0L);
 		boolean success = account.withdraw(command.money(), externalTargetAccount);
-		updateAccountStatePort.updateActivities(account);
+		updatePort.updateActivities(account);
 		return success;
 	}
 

@@ -24,7 +24,7 @@ class SendMoneySystemTest {
 	private TestRestTemplate restTemplate;
 
 	@Autowired
-	private ForGetAccount loadAccountPort;
+	private ForGetAccount loadPort;
 
 	@Test
 	@Sql("SendMoneySystemTest.sql")
@@ -58,9 +58,8 @@ class SendMoneySystemTest {
 	}
 
 	private Account loadAccount(AccountId accountId) {
-		return loadAccountPort.loadAccount(accountId);
+		return loadPort.loadAccount(accountId);
 	}
-
 
 	private ResponseEntity whenSendMoney(
 			AccountId sourceAccountId,
@@ -85,7 +84,7 @@ class SendMoneySystemTest {
 	}
 
 	private Money balanceOf(AccountId accountId) {
-		Account account = loadAccountPort.loadAccount(accountId);
+		Account account = loadPort.loadAccount(accountId);
 		return account.calculateBalance();
 	}
 

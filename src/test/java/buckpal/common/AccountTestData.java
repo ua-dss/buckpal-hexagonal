@@ -16,7 +16,6 @@ public class AccountTestData {
 						ActivityTestData.defaultActivity().build()));
 	}
 
-
 	public static class AccountBuilder {
 
 		private AccountId accountId;
@@ -43,6 +42,5 @@ public class AccountTestData {
 		}
 
 	}
-
 
 }

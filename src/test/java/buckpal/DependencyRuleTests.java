@@ -39,8 +39,7 @@ class DependencyRuleTests {
 				.resideOutsideOfPackages(
 						"buckpal.application.domain.model..",
 						"lombok..",
-						"java.."
-				)
+						"java..")
 				.check(new ClassFileImporter()
 						.importPackages("buckpal.."));
 	}

@@ -156,7 +156,8 @@ header h1 {
     color: #28a745;
 }
 
-.loading, .no-accounts {
+.loading,
+.no-accounts {
     text-align: center;
     padding: 40px 20px;
     color: #999;
@@ -278,6 +279,7 @@ header h1 {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

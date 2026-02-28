@@ -23,17 +23,14 @@ import static org.mockito.Mockito.times;
 
 class AccountSendMoneyServiceTest {
 
-	private final ForGetAccount loadAccountPort =
-			Mockito.mock(ForGetAccount.class);
+	private final ForGetAccount loadPort = Mockito.mock(ForGetAccount.class);
 
-	private final IAccountLock accountLock =
-			Mockito.mock(IAccountLock.class);
+	private final IAccountLock accountLock = Mockito.mock(IAccountLock.class);
 
-	private final ForUpdateAccount updateAccountStatePort =
-			Mockito.mock(ForUpdateAccount.class);
+	private final ForUpdateAccount updatePort = Mockito.mock(ForUpdateAccount.class);
 
-	private final AccountTransferUseCase sendMoneyService =
-			new AccountTransferUseCase(loadAccountPort, accountLock, updateAccountStatePort, moneyTransferProperties());
+	private final AccountTransferUseCase sendMoneyService = new AccountTransferUseCase(loadPort, accountLock,
+			updatePort, moneyTransferProperties());
 
 	@Test
 	void givenWithdrawalFails_thenOnlySourceAccountIsLockedAndReleased() {
@@ -95,9 +92,9 @@ class AccountSendMoneyServiceTest {
 		thenAccountsHaveBeenUpdated(sourceAccountId, targetAccountId);
 	}
 
-	private void thenAccountsHaveBeenUpdated(AccountId... accountIds){
+	private void thenAccountsHaveBeenUpdated(AccountId... accountIds) {
 		ArgumentCaptor<Account> accountCaptor = ArgumentCaptor.forClass(Account.class);
-		then(updateAccountStatePort).should(times(accountIds.length))
+		then(updatePort).should(times(accountIds.length))
 				.updateActivities(accountCaptor.capture());
 
 		List<AccountId> updatedAccountIds = accountCaptor.getAllValues()
@@ -106,7 +103,7 @@ class AccountSendMoneyServiceTest {
 				.map(Optional::get)
 				.collect(Collectors.toList());
 
-		for(AccountId accountId : accountIds){
+		for (AccountId accountId : accountIds) {
 			assertThat(updatedAccountIds).contains(accountId);
 		}
 	}
@@ -126,11 +123,11 @@ class AccountSendMoneyServiceTest {
 				.willReturn(true);
 	}
 
-	private Account givenTargetAccount(){
+	private Account givenTargetAccount() {
 		return givenAnAccountWithId(new AccountId(42L));
 	}
 
-	private Account givenSourceAccount(){
+	private Account givenSourceAccount() {
 		return givenAnAccountWithId(new AccountId(41L));
 	}
 
@@ -138,12 +135,12 @@ class AccountSendMoneyServiceTest {
 		Account account = Mockito.mock(Account.class);
 		given(account.getId())
 				.willReturn(Optional.of(id));
-		given(loadAccountPort.loadAccount(eq(account.getId().get())))
+		given(loadPort.loadAccount(eq(account.getId().get())))
 				.willReturn(account);
 		return account;
 	}
 
-	private MoneyTransferProperties moneyTransferProperties(){
+	private MoneyTransferProperties moneyTransferProperties() {
 		return new MoneyTransferProperties(Money.of(Long.MAX_VALUE));
 	}
 

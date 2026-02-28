@@ -8,7 +8,7 @@ const app = {
         const messageBox = document.getElementById('messageBox');
         messageBox.textContent = message;
         messageBox.className = `message-box message-${type} show`;
-        
+
         setTimeout(() => {
             messageBox.classList.remove('show');
         }, 5000);
@@ -19,7 +19,7 @@ const app = {
         try {
             const response = await fetch(`${this.apiBase}/accounts`);
             const data = await response.json();
-            
+
             if (data.success && data.accounts) {
                 this.displayAccounts(data.accounts);
             } else {
@@ -33,7 +33,7 @@ const app = {
     // Display accounts in the list
     displayAccounts(accounts) {
         const accountsList = document.getElementById('accountsList');
-        
+
         if (accounts.length === 0) {
             accountsList.innerHTML = '<p class="no-accounts">No accounts found. Create one to get started!</p>';
             return;
@@ -183,7 +183,7 @@ const app = {
             const data = await response.json();
 
             const balanceResult = document.getElementById('balanceResult');
-            
+
             if (data.success) {
                 balanceResult.innerHTML = `
                     <div class="balance-success">

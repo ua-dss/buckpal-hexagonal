@@ -5,7 +5,6 @@
 		"context": ".",
 		"args": {}
 	},
-
 	// Set *default* container specific settings.json values on container create.
 	//"settings": { 
 	//},
@@ -35,16 +34,16 @@
 	"forwardPorts": [
 		8080
 	],
-
 	// Set container environment variables
 	"containerEnv": {
 		"SHELL": "/bin/bash"
 	},
 	// Use 'postCreateCommand' to run commands after the container is created.
 	//"postCreateCommand": "echo 'Devcontainer ready — default shell: bash, prompt hostname: pydev'",
-
-	"runArgs": ["--hostname", "javadev"],
-	
+	"runArgs": [
+		"--hostname",
+		"javadev"
+	],
 	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "coder"
 }
