@@ -3,22 +3,21 @@ package buckpal.adapter.in.web;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Money;
-import buckpal.application.port.in.AccountBalanceUseCase;
-import buckpal.application.port.in.AccountWithdrawCommand;
-import buckpal.application.port.in.AccountWithdrawUseCase;
-import buckpal.common.WebAdapter;
+import buckpal.application.port.in.ForBalanceAccount;
+import buckpal.application.port.in.ForWithdrawAccount;
+import buckpal.common.IWebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@WebAdapter
+@IWebAdapter
 @RestController
 @RequiredArgsConstructor
 class AccountWithdrawController {
 
-	private final AccountWithdrawUseCase accountWithdrawUseCase;
-	private final AccountBalanceUseCase accountBalanceUseCase;
+	private final ForWithdrawAccount withdrawPort;
+	private final ForBalanceAccount balancePort;
 
 	@PostMapping(path = "/accounts/withdraw")
 	WithdrawResponse withdraw(
@@ -26,17 +25,17 @@ class AccountWithdrawController {
 			@RequestParam("amount") Long amount) {
 
 		try {
-			AccountWithdrawCommand command = new AccountWithdrawCommand(
+			ForWithdrawAccount.WithdrawCommand command = new ForWithdrawAccount.WithdrawCommand(
 					new AccountId(accountId),
 					Money.of(amount));
 
-			boolean success = accountWithdrawUseCase.withdraw(command);
+			boolean success = withdrawPort.withdraw(command);
 
-			AccountBalanceUseCase.AccountBalanceQuery query =
-					new AccountBalanceUseCase.AccountBalanceQuery(
+			ForBalanceAccount.BalanceQuery query =
+					new ForBalanceAccount.BalanceQuery(
 							new AccountId(accountId));
 
-			Long balance = accountBalanceUseCase.getAccountBalance(query)
+			Long balance = balancePort.getBalance(query)
 					.getAmount()
 					.longValue();
 

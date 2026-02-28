@@ -1,8 +1,8 @@
-package buckpal.application.port.out;
+package buckpal.common;
 
 import buckpal.application.domain.model.Account;
 
-public interface AccountLock {
+public interface IAccountLock {
 
 	void lockAccount(Account.AccountId accountId);
 

@@ -3,9 +3,9 @@ package buckpal.adapter.out.persistence;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Activity;
-import buckpal.application.port.out.LoadAccountPort;
-import buckpal.application.port.out.UpdateAccountStatePort;
-import buckpal.common.PersistenceAdapter;
+import buckpal.application.port.out.ForGettingAccount;
+import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.common.IPersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@PersistenceAdapter
+@IPersistenceAdapter
 class AccountPersistenceAdapter implements
-		LoadAccountPort,
-		UpdateAccountStatePort {
+		ForGettingAccount,
+		ForUpdatingAccount {
 
-	private final SpringDataAccountRepository accountRepository;
-	private final ActivityRepository activityRepository;
+	private final ISpringDataAccountRepository accountRepository;
+	private final IActivityRepository activityRepository;
 	private final AccountMapper accountMapper;
 
 	@Override

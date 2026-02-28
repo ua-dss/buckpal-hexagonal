@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface PersistenceAdapter {
+public @interface IPersistenceAdapter {
 
   /**
    * The value may indicate a suggestion for a logical component name,

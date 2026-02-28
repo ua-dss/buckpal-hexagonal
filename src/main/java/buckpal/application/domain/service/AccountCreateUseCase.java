@@ -3,23 +3,22 @@ package buckpal.application.domain.service;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.ActivityWindow;
-import buckpal.application.port.in.AccountCreateCommand;
-import buckpal.application.port.in.AccountCreateUseCase;
-import buckpal.application.port.out.UpdateAccountStatePort;
-import buckpal.common.UseCase;
+import buckpal.application.port.in.ForCreateAccount;
+import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.common.IUseCase;
 import lombok.RequiredArgsConstructor;
 
 import jakarta.transaction.Transactional;
 
 @RequiredArgsConstructor
-@UseCase
+@IUseCase
 @Transactional
-public class AccountCreateService implements AccountCreateUseCase {
+public class AccountCreateUseCase implements ForCreateAccount {
 
-	private final UpdateAccountStatePort updateAccountStatePort;
+	private final ForUpdatingAccount updateAccountStatePort;
 
 	@Override
-	public AccountId createAccount(AccountCreateCommand command) {
+	public AccountId createAccount(CreateCommand command) {
 		Account newAccount = Account.withoutId(
 				command.initialBalance(),
 				new ActivityWindow());

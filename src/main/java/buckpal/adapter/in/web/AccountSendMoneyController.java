@@ -1,10 +1,9 @@
 package buckpal.adapter.in.web;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import buckpal.application.port.in.AccountBalanceUseCase;
-import buckpal.application.port.in.AccountSendMoneyUseCase;
-import buckpal.application.port.in.AccountSendMoneyCommand;
-import buckpal.common.WebAdapter;
+import buckpal.application.port.in.ForBalanceAccount;
+import buckpal.application.port.in.ForSendMoneyAccount;
+import buckpal.common.IWebAdapter;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Money;
 import lombok.RequiredArgsConstructor;
@@ -12,13 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@WebAdapter
+@IWebAdapter
 @RestController
 @RequiredArgsConstructor
 class AccountSendMoneyController {
 
-	private final AccountSendMoneyUseCase sendMoneyUseCase;
-	private final AccountBalanceUseCase accountBalanceUseCase;
+	private final ForSendMoneyAccount sendPort;
+	private final ForBalanceAccount balancePort;
 
 	@PostMapping(path = "/accounts/send")
 	SendMoneyResponse sendMoney(
@@ -27,26 +26,26 @@ class AccountSendMoneyController {
 			@RequestParam("amount") Long amount) {
 
 		try {
-			AccountSendMoneyCommand command = new AccountSendMoneyCommand(
+			ForSendMoneyAccount.SendMoneyCommand command = new ForSendMoneyAccount.SendMoneyCommand(
 					new AccountId(sourceAccountId),
 					new AccountId(targetAccountId),
 					Money.of(amount));
 
-			boolean success = sendMoneyUseCase.sendMoney(command);
+			boolean success = sendPort.sendMoney(command);
 
-			AccountBalanceUseCase.AccountBalanceQuery sourceQuery =
-					new AccountBalanceUseCase.AccountBalanceQuery(
+			ForBalanceAccount.BalanceQuery sourceQuery =
+					new ForBalanceAccount.BalanceQuery(
 							new AccountId(sourceAccountId));
 
-			AccountBalanceUseCase.AccountBalanceQuery targetQuery =
-					new AccountBalanceUseCase.AccountBalanceQuery(
+			ForBalanceAccount.BalanceQuery targetQuery =
+					new ForBalanceAccount.BalanceQuery(
 							new AccountId(targetAccountId));
 
-			Long sourceBalance = accountBalanceUseCase.getAccountBalance(sourceQuery)
+			Long sourceBalance = balancePort.getBalance(sourceQuery)
 					.getAmount()
 					.longValue();
 
-			Long targetBalance = accountBalanceUseCase.getAccountBalance(targetQuery)
+			Long targetBalance = balancePort.getBalance(targetQuery)
 					.getAmount()
 					.longValue();
 

@@ -2,5 +2,5 @@ package buckpal.adapter.out.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface SpringDataAccountRepository extends JpaRepository<AccountJpaEntity, Long> {
+interface ISpringDataAccountRepository extends JpaRepository<AccountJpaEntity, Long> {
 }

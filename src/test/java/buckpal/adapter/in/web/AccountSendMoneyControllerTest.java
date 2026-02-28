@@ -1,8 +1,8 @@
 package buckpal.adapter.in.web;
 
-import buckpal.application.port.in.AccountBalanceUseCase;
-import buckpal.application.port.in.AccountSendMoneyUseCase;
-import buckpal.application.port.in.AccountSendMoneyCommand;
+import buckpal.application.port.in.ForBalanceAccount;
+import buckpal.application.port.in.ForSendMoneyAccount;
+import buckpal.application.port.in.ForSendMoneyAccount.SendMoneyCommand;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Money;
 import org.junit.jupiter.api.Test;
@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -21,15 +24,15 @@ class AccountSendMoneyControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private AccountSendMoneyUseCase sendMoneyUseCase;
+	private ForSendMoneyAccount sendMoneyUseCase;
 
 	@MockBean
-	private AccountBalanceUseCase accountBalanceUseCase;
+	private ForBalanceAccount accountBalanceUseCase;
 
 	@Test
 	void testSendMoney() throws Exception {
 
-		given(accountBalanceUseCase.getAccountBalance(any(AccountBalanceUseCase.AccountBalanceQuery.class)))
+		given(accountBalanceUseCase.getBalance(any(ForBalanceAccount.BalanceQuery.class)))
 				.willReturn(Money.of(1000L));
 
 		mockMvc.perform(post("/accounts/send")
@@ -40,7 +43,7 @@ class AccountSendMoneyControllerTest {
 				.andExpect(status().isOk());
 
 		then(sendMoneyUseCase).should()
-				.sendMoney(eq(new AccountSendMoneyCommand(
+				.sendMoney(eq(new SendMoneyCommand(
 						new AccountId(41L),
 						new AccountId(42L),
 						Money.of(500L))));

@@ -1,29 +1,29 @@
 package buckpal.application.domain.service;
 
-import buckpal.application.port.in.AccountSendMoneyCommand;
-import buckpal.application.port.in.AccountSendMoneyUseCase;
-import buckpal.application.port.out.AccountLock;
-import buckpal.application.port.out.LoadAccountPort;
-import buckpal.application.port.out.UpdateAccountStatePort;
-import buckpal.common.UseCase;
+import buckpal.application.port.in.ForSendMoneyAccount;
+import buckpal.application.port.out.ForGettingAccount;
+import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.common.IAccountLock;
+import buckpal.common.IUseCase;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
+import buckpal.application.domain.service.exception.ThresholdExceededException;
 import lombok.RequiredArgsConstructor;
 
 import jakarta.transaction.Transactional;
 
 @RequiredArgsConstructor
-@UseCase
+@IUseCase
 @Transactional
-public class AccountSendMoneyService implements AccountSendMoneyUseCase {
+public class AccountTransferUseCase implements ForSendMoneyAccount {
 
-	private final LoadAccountPort loadAccountPort;
-	private final AccountLock accountLock;
-	private final UpdateAccountStatePort updateAccountStatePort;
+	private final ForGettingAccount loadAccountPort;
+	private final IAccountLock accountLock;
+	private final ForUpdatingAccount updateAccountStatePort;
 	private final MoneyTransferProperties moneyTransferProperties;
 
 	@Override
-	public boolean sendMoney(AccountSendMoneyCommand command) {
+	public boolean sendMoney(SendMoneyCommand command) {
 
 		checkThreshold(command);
 
@@ -59,7 +59,7 @@ public class AccountSendMoneyService implements AccountSendMoneyUseCase {
 		return true;
 	}
 
-	private void checkThreshold(AccountSendMoneyCommand command) {
+	private void checkThreshold(SendMoneyCommand command) {
 		if(command.money().isGreaterThan(moneyTransferProperties.getMaximumTransferThreshold())){
 			throw new ThresholdExceededException(moneyTransferProperties.getMaximumTransferThreshold(), command.money());
 		}

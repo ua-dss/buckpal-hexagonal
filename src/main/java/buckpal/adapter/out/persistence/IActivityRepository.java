@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-interface ActivityRepository extends JpaRepository<ActivityJpaEntity, Long> {
+interface IActivityRepository extends JpaRepository<ActivityJpaEntity, Long> {
 
 	@Query("""
 			select a from ActivityJpaEntity a 

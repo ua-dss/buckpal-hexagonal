@@ -3,10 +3,10 @@ package buckpal.application.port.in;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Money;
 
-public interface AccountBalanceUseCase {
+public interface ForBalanceAccount {
 
-	Money getAccountBalance(AccountBalanceQuery query);
+	Money getBalance(BalanceQuery query);
 
-	record AccountBalanceQuery(AccountId accountId) {
+	record BalanceQuery(AccountId accountId) {
 	}
 }

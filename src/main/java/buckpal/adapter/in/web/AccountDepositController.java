@@ -3,22 +3,21 @@ package buckpal.adapter.in.web;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Money;
-import buckpal.application.port.in.AccountBalanceUseCase;
-import buckpal.application.port.in.AccountDepositCommand;
-import buckpal.application.port.in.AccountDepositUseCase;
-import buckpal.common.WebAdapter;
+import buckpal.application.port.in.ForBalanceAccount;
+import buckpal.application.port.in.ForDepositAccount;
+import buckpal.common.IWebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@WebAdapter
+@IWebAdapter
 @RestController
 @RequiredArgsConstructor
 class AccountDepositController {
 
-	private final AccountDepositUseCase accountDepositUseCase;
-	private final AccountBalanceUseCase accountBalanceUseCase;
+	private final ForDepositAccount depositPort;
+	private final ForBalanceAccount balancePort;
 
 	@PostMapping(path = "/accounts/deposit")
 	DepositResponse deposit(
@@ -26,17 +25,17 @@ class AccountDepositController {
 			@RequestParam("amount") Long amount) {
 
 		try {
-			AccountDepositCommand command = new AccountDepositCommand(
+			ForDepositAccount.DepositCommand command = new ForDepositAccount.DepositCommand(
 					new AccountId(accountId),
 					Money.of(amount));
 
-			boolean success = accountDepositUseCase.deposit(command);
+			boolean success = depositPort.deposit(command);
 
-			AccountBalanceUseCase.AccountBalanceQuery query =
-					new AccountBalanceUseCase.AccountBalanceQuery(
+			ForBalanceAccount.BalanceQuery query =
+					new ForBalanceAccount.BalanceQuery(
 							new AccountId(accountId));
 
-			Long balance = accountBalanceUseCase.getAccountBalance(query)
+			Long balance = balancePort.getBalance(query)
 					.getAmount()
 					.longValue();
 

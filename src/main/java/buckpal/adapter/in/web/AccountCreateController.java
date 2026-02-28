@@ -3,29 +3,28 @@ package buckpal.adapter.in.web;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Money;
-import buckpal.application.port.in.AccountCreateCommand;
-import buckpal.application.port.in.AccountCreateUseCase;
-import buckpal.common.WebAdapter;
+import buckpal.application.port.in.ForCreateAccount;
+import buckpal.common.IWebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@WebAdapter
+@IWebAdapter
 @RestController
 @RequiredArgsConstructor
 class AccountCreateController {
 
-	private final AccountCreateUseCase createAccountUseCase;
+	private final ForCreateAccount createPort;
 
 	@PostMapping(path = "/accounts/create")
-	CreateResponse createAccount(@RequestParam("initialBalance") Long initialBalance) {
+	CreateResponse createAccount(@RequestParam Long initialBalance) {
 
 		try {
-			AccountCreateCommand command = new AccountCreateCommand(
+			ForCreateAccount.CreateCommand command = new ForCreateAccount.CreateCommand(
 					Money.of(initialBalance));
 
-			AccountId accountId = createAccountUseCase.createAccount(command);
+			AccountId accountId = createPort.createAccount(command);
 			return new CreateResponse(true, new AccountInfo(accountId.getValue(), initialBalance), null);
 		} catch (Exception e) {
 			return new CreateResponse(false, null, e.getMessage());

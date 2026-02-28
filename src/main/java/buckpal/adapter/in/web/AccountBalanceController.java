@@ -2,29 +2,29 @@ package buckpal.adapter.in.web;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import buckpal.application.domain.model.Account.AccountId;
-import buckpal.application.port.in.AccountBalanceUseCase;
-import buckpal.common.WebAdapter;
+import buckpal.application.port.in.ForBalanceAccount;
+import buckpal.common.IWebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@WebAdapter
+@IWebAdapter
 @RestController
 @RequiredArgsConstructor
 class AccountBalanceController {
 
-	private final AccountBalanceUseCase getAccountBalanceUseCase;
+	private final ForBalanceAccount balancePort;
 
 	@GetMapping(path = "/accounts/balance")
-	BalanceResponse getAccountBalance(@RequestParam("accountId") Long accountId) {
+	BalanceResponse getAccountBalance(@RequestParam Long accountId) {
 
 		try {
-			AccountBalanceUseCase.AccountBalanceQuery query =
-					new AccountBalanceUseCase.AccountBalanceQuery(
+			ForBalanceAccount.BalanceQuery query =
+					new ForBalanceAccount.BalanceQuery(
 							new AccountId(accountId));
 
-			Long balance = getAccountBalanceUseCase.getAccountBalance(query)
+			Long balance = balancePort.getBalance(query)
 					.getAmount()
 					.longValue();
 

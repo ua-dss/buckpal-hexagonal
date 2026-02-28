@@ -1,4 +1,4 @@
-package buckpal.application.port.in;
+package buckpal.common.validation;
 
 import buckpal.application.domain.model.Money;
 import jakarta.validation.Constraint;
@@ -14,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Constraint(validatedBy = PositiveMoneyValidator.class)
 @Documented
-public @interface PositiveMoney {
+public @interface IPositiveMoney {
 
     String message() default "must be positive" +
             " found: ${validatedValue}";

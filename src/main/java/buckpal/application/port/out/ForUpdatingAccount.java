@@ -1,13 +1,12 @@
 package buckpal.application.port.out;
 
-import java.util.List;
-
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 
-public interface LoadAccountPort {
+public interface ForUpdatingAccount {
 
-	Account loadAccount(AccountId accountId);
+	void updateActivities(Account account);
 
-	List<Account> getAllAccounts();
+	AccountId createAccount(Account account);
+
 }

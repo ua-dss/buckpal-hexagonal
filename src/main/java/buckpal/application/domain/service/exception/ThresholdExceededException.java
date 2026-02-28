@@ -1,4 +1,4 @@
-package buckpal.application.domain.service;
+package buckpal.application.domain.service.exception;
 
 import buckpal.application.domain.model.Money;
 

@@ -1,9 +1,8 @@
 package buckpal.adapter.in.web;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import buckpal.application.domain.model.Account;
-import buckpal.application.port.in.AccountListAllUseCase;
-import buckpal.common.WebAdapter;
+import buckpal.application.port.in.ForListAccount;
+import buckpal.common.IWebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,18 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebAdapter
+@IWebAdapter
 @RestController
 @RequiredArgsConstructor
 class AccountListAllController {
 
-	private final AccountListAllUseCase listAccountsUseCase;
+	private final ForListAccount listPort;
 
 	@GetMapping(path = "/accounts")
 	ListResponse listAccounts() {
 
 		try {
-			List<AccountInfo> accounts = listAccountsUseCase.listAccounts().stream()
+			List<AccountInfo> accounts = listPort.listAccounts().stream()
 					.map(account -> new AccountInfo(
 							account.getId().orElse(null).getValue(),
 							account.calculateBalance().getAmount().longValue()))

@@ -1,9 +1,9 @@
 package buckpal.application.domain.service;
 
-import buckpal.application.port.in.AccountSendMoneyCommand;
-import buckpal.application.port.out.AccountLock;
-import buckpal.application.port.out.LoadAccountPort;
-import buckpal.application.port.out.UpdateAccountStatePort;
+import buckpal.application.port.in.ForSendMoneyAccount.SendMoneyCommand;
+import buckpal.application.port.out.ForGettingAccount;
+import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.common.IAccountLock;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Money;
@@ -16,21 +16,24 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.times;
 
 class AccountSendMoneyServiceTest {
 
-	private final LoadAccountPort loadAccountPort =
-			Mockito.mock(LoadAccountPort.class);
+	private final ForGettingAccount loadAccountPort =
+			Mockito.mock(ForGettingAccount.class);
 
-	private final AccountLock accountLock =
-			Mockito.mock(AccountLock.class);
+	private final IAccountLock accountLock =
+			Mockito.mock(IAccountLock.class);
 
-	private final UpdateAccountStatePort updateAccountStatePort =
-			Mockito.mock(UpdateAccountStatePort.class);
+	private final ForUpdatingAccount updateAccountStatePort =
+			Mockito.mock(ForUpdatingAccount.class);
 
-	private final AccountSendMoneyService sendMoneyService =
-			new AccountSendMoneyService(loadAccountPort, accountLock, updateAccountStatePort, moneyTransferProperties());
+	private final AccountTransferUseCase sendMoneyService =
+			new AccountTransferUseCase(loadAccountPort, accountLock, updateAccountStatePort, moneyTransferProperties());
 
 	@Test
 	void givenWithdrawalFails_thenOnlySourceAccountIsLockedAndReleased() {
@@ -44,7 +47,7 @@ class AccountSendMoneyServiceTest {
 		givenWithdrawalWillFail(sourceAccount);
 		givenDepositWillSucceed(targetAccount);
 
-		AccountSendMoneyCommand command = new AccountSendMoneyCommand(
+		SendMoneyCommand command = new SendMoneyCommand(
 				sourceAccountId,
 				targetAccountId,
 				Money.of(300L));
@@ -69,7 +72,7 @@ class AccountSendMoneyServiceTest {
 
 		Money money = Money.of(500L);
 
-		AccountSendMoneyCommand command = new AccountSendMoneyCommand(
+		SendMoneyCommand command = new SendMoneyCommand(
 				sourceAccount.getId().get(),
 				targetAccount.getId().get(),
 				money);
