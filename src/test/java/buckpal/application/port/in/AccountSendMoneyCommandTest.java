@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 
-class AccountSendMoneyCommandTest {
+class SendMoneyCommandTest {
 
     @Test
     public void validationOk() {
