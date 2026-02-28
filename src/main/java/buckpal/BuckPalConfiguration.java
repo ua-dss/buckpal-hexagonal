@@ -1,7 +1,8 @@
 package buckpal;
 
-import buckpal.application.domain.service.MoneyTransferProperties;
 import buckpal.application.domain.model.Money;
+import buckpal.application.domain.usecase.MoneyTransferProperties;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

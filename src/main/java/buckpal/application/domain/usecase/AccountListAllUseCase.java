@@ -1,4 +1,4 @@
-package buckpal.application.domain.service;
+package buckpal.application.domain.usecase;
 
 import buckpal.application.domain.model.Account;
 import buckpal.application.port.in.ForListAccount;

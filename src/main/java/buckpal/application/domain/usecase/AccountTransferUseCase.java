@@ -1,4 +1,4 @@
-package buckpal.application.domain.service;
+package buckpal.application.domain.usecase;
 
 import buckpal.application.port.in.ForSendMoneyAccount;
 import buckpal.application.port.out.ForGetAccount;
@@ -7,7 +7,7 @@ import buckpal.common.IAccountLock;
 import buckpal.common.IUseCase;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
-import buckpal.application.domain.service.exception.ThresholdExceededException;
+import buckpal.application.domain.usecase.exception.ThresholdExceededException;
 import lombok.RequiredArgsConstructor;
 
 import jakarta.transaction.Transactional;

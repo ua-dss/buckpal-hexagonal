@@ -6,6 +6,8 @@ import buckpal.application.port.out.ForUpdateAccount;
 import buckpal.common.IAccountLock;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
+import buckpal.application.domain.usecase.AccountTransferUseCase;
+import buckpal.application.domain.usecase.MoneyTransferProperties;
 import buckpal.application.domain.model.Money;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
