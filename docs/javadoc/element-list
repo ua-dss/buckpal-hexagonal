@@ -1,7 +1,7 @@
 buckpal
 buckpal.application.domain.model
-buckpal.application.domain.service
-buckpal.application.domain.service.exception
+buckpal.application.domain.usecase
+buckpal.application.domain.usecase.exception
 buckpal.application.port.in
 buckpal.application.port.out
 buckpal.common

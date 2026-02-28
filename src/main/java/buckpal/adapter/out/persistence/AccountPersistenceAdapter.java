@@ -19,8 +19,8 @@ class AccountPersistenceAdapter implements
 		ForGetAccount,
 		ForUpdateAccount {
 
-	private final ISpringDataAccountRepository accountRepository;
-	private final IActivityRepository activityRepository;
+	private final IAccountJpaRepository accountRepository;
+	private final IActivityJpaRepository activityRepository;
 	private final AccountMapper accountMapper;
 
 	@Override

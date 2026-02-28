@@ -21,7 +21,7 @@ class AccountPersistenceAdapterTest {
 	private AccountPersistenceAdapter adapterUnderTest;
 
 	@Autowired
-	private IActivityRepository activityRepository;
+	private IActivityJpaRepository activityRepository;
 
 	@Test
 	@Sql("AccountPersistenceAdapterTest.sql")
