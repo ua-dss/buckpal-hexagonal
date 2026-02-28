@@ -1,6 +1,6 @@
 package buckpal;
 
-import buckpal.application.port.out.ForGettingAccount;
+import buckpal.application.port.out.ForGetAccount;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Money;
@@ -24,7 +24,7 @@ class SendMoneySystemTest {
 	private TestRestTemplate restTemplate;
 
 	@Autowired
-	private ForGettingAccount loadAccountPort;
+	private ForGetAccount loadAccountPort;
 
 	@Test
 	@Sql("SendMoneySystemTest.sql")

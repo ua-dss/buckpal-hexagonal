@@ -1,8 +1,8 @@
 package buckpal.application.domain.service;
 
 import buckpal.application.port.in.ForSendMoneyAccount.SendMoneyCommand;
-import buckpal.application.port.out.ForGettingAccount;
-import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.application.port.out.ForGetAccount;
+import buckpal.application.port.out.ForUpdateAccount;
 import buckpal.common.IAccountLock;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
@@ -23,14 +23,14 @@ import static org.mockito.Mockito.times;
 
 class AccountSendMoneyServiceTest {
 
-	private final ForGettingAccount loadAccountPort =
-			Mockito.mock(ForGettingAccount.class);
+	private final ForGetAccount loadAccountPort =
+			Mockito.mock(ForGetAccount.class);
 
 	private final IAccountLock accountLock =
 			Mockito.mock(IAccountLock.class);
 
-	private final ForUpdatingAccount updateAccountStatePort =
-			Mockito.mock(ForUpdatingAccount.class);
+	private final ForUpdateAccount updateAccountStatePort =
+			Mockito.mock(ForUpdateAccount.class);
 
 	private final AccountTransferUseCase sendMoneyService =
 			new AccountTransferUseCase(loadAccountPort, accountLock, updateAccountStatePort, moneyTransferProperties());

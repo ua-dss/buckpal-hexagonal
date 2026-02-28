@@ -3,8 +3,8 @@ package buckpal.application.domain.service;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.port.in.ForDepositAccount;
-import buckpal.application.port.out.ForGettingAccount;
-import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.application.port.out.ForGetAccount;
+import buckpal.application.port.out.ForUpdateAccount;
 import buckpal.common.IUseCase;
 import lombok.RequiredArgsConstructor;
 
@@ -12,16 +12,16 @@ import lombok.RequiredArgsConstructor;
 @IUseCase
 public class AccountDepositUseCase implements ForDepositAccount {
 
-	private final ForGettingAccount loadAccountPort;
-	private final ForUpdatingAccount updateAccountStatePort;
+	private final ForGetAccount loadPort;
+	private final ForUpdateAccount updatePort;
 
 	@Override
 	public boolean deposit(DepositCommand command) {
-		Account account = loadAccountPort.loadAccount(command.accountId());
+		Account account = loadPort.loadAccount(command.accountId());
 		// Use a system account as the source for external deposits
 		AccountId externalSourceAccount = new AccountId(0L);
 		boolean success = account.deposit(command.money(), externalSourceAccount);
-		updateAccountStatePort.updateActivities(account);
+		updatePort.updateActivities(account);
 		return success;
 	}
 

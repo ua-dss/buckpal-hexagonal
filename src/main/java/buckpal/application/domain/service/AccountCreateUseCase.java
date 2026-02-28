@@ -4,7 +4,7 @@ import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.ActivityWindow;
 import buckpal.application.port.in.ForCreateAccount;
-import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.application.port.out.ForUpdateAccount;
 import buckpal.common.IUseCase;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class AccountCreateUseCase implements ForCreateAccount {
 
-	private final ForUpdatingAccount updateAccountStatePort;
+	private final ForUpdateAccount updateAccountStatePort;
 
 	@Override
 	public AccountId createAccount(CreateCommand command) {

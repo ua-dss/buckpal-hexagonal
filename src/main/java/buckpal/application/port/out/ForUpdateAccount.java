@@ -3,7 +3,7 @@ package buckpal.application.port.out;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 
-public interface ForUpdatingAccount {
+public interface ForUpdateAccount {
 
 	void updateActivities(Account account);
 

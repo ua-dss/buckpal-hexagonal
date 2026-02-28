@@ -2,7 +2,7 @@ package buckpal.application.domain.service;
 
 import buckpal.application.domain.model.Account;
 import buckpal.application.port.in.ForListAccount;
-import buckpal.application.port.out.ForGettingAccount;
+import buckpal.application.port.out.ForGetAccount;
 import buckpal.common.IUseCase;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 public class AccountListAllUseCase implements ForListAccount {
 
-	private final ForGettingAccount loadPort;
+	private final ForGetAccount loadPort;
 
 	@Override
 	public List<Account> listAccounts() {

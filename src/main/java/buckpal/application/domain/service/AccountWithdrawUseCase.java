@@ -3,8 +3,8 @@ package buckpal.application.domain.service;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.port.in.ForWithdrawAccount;
-import buckpal.application.port.out.ForGettingAccount;
-import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.application.port.out.ForGetAccount;
+import buckpal.application.port.out.ForUpdateAccount;
 import buckpal.common.IUseCase;
 import lombok.RequiredArgsConstructor;
 
@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 @IUseCase
 public class AccountWithdrawUseCase implements ForWithdrawAccount {
 
-	private final ForGettingAccount loadAccountPort;
-	private final ForUpdatingAccount updateAccountStatePort;
+	private final ForGetAccount loadAccountPort;
+	private final ForUpdateAccount updateAccountStatePort;
 
 	@Override
 	public boolean withdraw(WithdrawCommand command) {

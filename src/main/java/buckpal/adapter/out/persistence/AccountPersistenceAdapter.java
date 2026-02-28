@@ -3,8 +3,8 @@ package buckpal.adapter.out.persistence;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 import buckpal.application.domain.model.Activity;
-import buckpal.application.port.out.ForGettingAccount;
-import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.application.port.out.ForGetAccount;
+import buckpal.application.port.out.ForUpdateAccount;
 import buckpal.common.IPersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @IPersistenceAdapter
 class AccountPersistenceAdapter implements
-		ForGettingAccount,
-		ForUpdatingAccount {
+		ForGetAccount,
+		ForUpdateAccount {
 
 	private final ISpringDataAccountRepository accountRepository;
 	private final IActivityRepository activityRepository;

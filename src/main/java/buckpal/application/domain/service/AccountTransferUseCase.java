@@ -1,8 +1,8 @@
 package buckpal.application.domain.service;
 
 import buckpal.application.port.in.ForSendMoneyAccount;
-import buckpal.application.port.out.ForGettingAccount;
-import buckpal.application.port.out.ForUpdatingAccount;
+import buckpal.application.port.out.ForGetAccount;
+import buckpal.application.port.out.ForUpdateAccount;
 import buckpal.common.IAccountLock;
 import buckpal.common.IUseCase;
 import buckpal.application.domain.model.Account;
@@ -17,9 +17,9 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class AccountTransferUseCase implements ForSendMoneyAccount {
 
-	private final ForGettingAccount loadAccountPort;
+	private final ForGetAccount loadPort;
 	private final IAccountLock accountLock;
-	private final ForUpdatingAccount updateAccountStatePort;
+	private final ForUpdateAccount updatePort;
 	private final MoneyTransferProperties moneyTransferProperties;
 
 	@Override
@@ -27,10 +27,10 @@ public class AccountTransferUseCase implements ForSendMoneyAccount {
 
 		checkThreshold(command);
 
-		Account sourceAccount = loadAccountPort.loadAccount(
+		Account sourceAccount = loadPort.loadAccount(
 				command.sourceAccountId());
 
-		Account targetAccount = loadAccountPort.loadAccount(
+		Account targetAccount = loadPort.loadAccount(
 				command.targetAccountId());
 
 		AccountId sourceAccountId = sourceAccount.getId()
@@ -51,8 +51,8 @@ public class AccountTransferUseCase implements ForSendMoneyAccount {
 			return false;
 		}
 
-		updateAccountStatePort.updateActivities(sourceAccount);
-		updateAccountStatePort.updateActivities(targetAccount);
+		updatePort.updateActivities(sourceAccount);
+		updatePort.updateActivities(targetAccount);
 
 		accountLock.releaseAccount(sourceAccountId);
 		accountLock.releaseAccount(targetAccountId);

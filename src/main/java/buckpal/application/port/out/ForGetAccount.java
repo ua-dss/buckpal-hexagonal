@@ -5,7 +5,7 @@ import java.util.List;
 import buckpal.application.domain.model.Account;
 import buckpal.application.domain.model.Account.AccountId;
 
-public interface ForGettingAccount {
+public interface ForGetAccount {
 
 	Account loadAccount(AccountId accountId);
 

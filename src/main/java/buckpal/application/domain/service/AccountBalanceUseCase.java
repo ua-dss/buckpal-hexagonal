@@ -2,7 +2,7 @@ package buckpal.application.domain.service;
 
 import buckpal.application.domain.model.Money;
 import buckpal.application.port.in.ForBalanceAccount;
-import buckpal.application.port.out.ForGettingAccount;
+import buckpal.application.port.out.ForGetAccount;
 import buckpal.common.IUseCase;
 import lombok.RequiredArgsConstructor;
 
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @IUseCase
 public class AccountBalanceUseCase implements ForBalanceAccount {
 
-	private final ForGettingAccount loadPort;
+	private final ForGetAccount loadPort;
 
 	@Override
 	public Money getBalance(BalanceQuery query) {
